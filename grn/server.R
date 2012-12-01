@@ -5,13 +5,13 @@ library(igraph)
 shinyServer(function(input, output) {
 
   data <- reactive(function(){
-    #df <- input$file
-    #path <- df$datapath     
-    data <- read.csv("/home/qbrc/data.csv", row.names=1)
+    df <- input$file
+    path <- df$datapath     
+    data <- read.csv(path, row.names=1)
     data
   })
   
-  output$debug <- reactivePrint(function(){input$file})
+  output$debug <- reactivePrint(function(){})
   
   output$main_plot <- reactivePlot(function() {
   
@@ -22,14 +22,14 @@ shinyServer(function(input, output) {
       return()  
     }
     
-    data <- read.csv("/home/qbrc/data.csv", row.names=1)
+    data <- data()
     
     if (input$method == "GeneNet"){      
       net <- ggm.estimate.pcor(data)
       net <- abs(net)      
     }
     
-    rownames(net) <- rownames(data)
+    rownames(net) <- colnames(net) <- colnames(data)
     
     net[net < input$con_weight] <- 0
     

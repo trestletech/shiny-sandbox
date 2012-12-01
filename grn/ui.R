@@ -13,7 +13,7 @@ shinyUI(bootstrapPage(
   
   sliderInput(inputId = "con_weight",
         label = "Connection threshold:",
-        min = 0.0, max = 1, value = .6, step = 0.1)
+        min = 0.0, max = 1, value = .25, step = 0.05)
   
 
 ))
