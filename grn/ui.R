@@ -7,7 +7,7 @@ shinyUI(bootstrapPage(
 
   fileInput(inputId = "file", label="Network to reconstruct:"),
   
-  plotOutput(outputId = "main_plot", height = "600px"),
+  plotOutput(outputId = "main_plot", height = "500px"),
 
   verbatimTextOutput("debug"),
   
