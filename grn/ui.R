@@ -5,11 +5,11 @@ shinyUI(bootstrapPage(
       choices = c("GeneNet"),
       selected = "GeneNet"),
 
-  
+  fileInput(inputId = "file", label="Network to reconstruct:"),
   
   plotOutput(outputId = "main_plot", height = "600px"),
 
-  # Display this only if the density is shown
+  verbatimTextOutput("debug"),
   
   sliderInput(inputId = "con_weight",
         label = "Connection threshold:",
