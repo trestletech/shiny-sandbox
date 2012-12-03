@@ -28,7 +28,31 @@ shinyUI(pageWithSidebar(
       return $(scope).find('.shiny-network-output');
     },
     renderValue: function(el, data) {
-      $(el).text(data);
+      function get2DArray(size) {
+          size = size > 0 ? size : 0;
+          var arr = [];
+      
+          while(size--) {
+              arr.push([]);
+          }
+      
+          return arr;
+      }
+
+      //convert data to 2d array
+      d2 = get2DArray(data.names.length);
+      
+      var curRow = 0;
+      for (var i = 0; i < data.data.length; i++){
+        d2[curRow].push(data.data[i]);
+        if (d2[curRow].length == data.names.length){
+          curRow++;
+        }
+      }
+
+      data.data = d2;
+
+      $(el).text(data.names);
     }
   });
   Shiny.outputBindings.register(networkOutputBinding, 'trestletech.networkbinding');</script>"),

@@ -11,8 +11,9 @@ reactiveAdjacencyMatrix <- function(func){
       stop("Colnames and rownames of your matrix must be identical")
     }
     
-    #warning: this will sacrifice the rownames, so we presuppose that they're identical
-    as.data.frame(val)
+    #warning: this will sacrifice the colnames, so we presuppose that they're identical
+    list(names=rownames(val), data=as.numeric(val))
+    
   })
 
 }
