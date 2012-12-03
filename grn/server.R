@@ -2,6 +2,21 @@
 library(GeneNet)
 library(igraph)
 
+reactiveAdjacencyMatrix <- function(func){
+  reactive(function(){
+        
+    val <- func()
+    #TODO: re-arrange columns if necessary
+    if (!all(rownames(val) == colnames(val))){
+      stop("Colnames and rownames of your matrix must be identical")
+    }
+    
+    #warning: this will sacrifice the rownames, so we presuppose that they're identical
+    as.data.frame(val)
+  })
+
+}
+
 shinyServer(function(input, output) {
 
   data <- reactive(function(){
@@ -13,7 +28,7 @@ shinyServer(function(input, output) {
   
   output$debug <- reactivePrint(function(){})
   
-  output$main_plot <- reactivePlot(function() {
+  output$main_net <- reactiveAdjacencyMatrix(function() {
   
     if(is.null(input$file)){
       plot.new()
@@ -26,17 +41,14 @@ shinyServer(function(input, output) {
     
     if (input$method == "GeneNet"){      
       net <- ggm.estimate.pcor(data)
-      net <- abs(net)      
+      net <- abs(net)  
+      net <- matrix(as.numeric(net), ncol=ncol(net))
+      rownames(net) <- colnames(net) <- colnames(data)        
     }
-    
-    rownames(net) <- colnames(net) <- colnames(data)
     
     net[net < input$con_weight] <- 0
     
-    gr <- graph.adjacency(net, mode="undirected", diag = FALSE, weighted=TRUE)
-    
-    
-    plot(gr)
+    net
 
   })
 })

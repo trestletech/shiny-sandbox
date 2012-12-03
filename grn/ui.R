@@ -1,4 +1,11 @@
-shinyUI(pageWithSidebar(
+reactiveNetwork <- function (outputId) 
+{
+  pre(id = outputId, class = "shiny-network-output")
+}
+
+
+
+shinyUI(pageWithSidebar(    
   headerPanel("Reconstruct Gene Networks"),
   
   sidebarPanel(
@@ -15,7 +22,17 @@ shinyUI(pageWithSidebar(
   ),
   
   mainPanel(    
-    plotOutput(outputId = "main_plot", height = "500px"),
+    HTML("<script type=\"text/javascript\">var networkOutputBinding = new Shiny.OutputBinding();
+  $.extend(networkOutputBinding, {
+    find: function(scope) {
+      return $(scope).find('.shiny-network-output');
+    },
+    renderValue: function(el, data) {
+      $(el).text(data);
+    }
+  });
+  Shiny.outputBindings.register(networkOutputBinding, 'trestletech.networkbinding');</script>"),
+    reactiveNetwork(outputId = "main_net"),
     verbatimTextOutput("debug")
   )
   
