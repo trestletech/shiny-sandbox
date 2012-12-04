@@ -11,6 +11,11 @@ shinyUI(pageWithSidebar(
   sidebarPanel(
     fileInput(inputId = "file", label="Network to reconstruct:"),
     
+    selectInput(inputId = "orientation",
+        label="One row represents a single:",
+        choices = c("Sample", "Gene"),
+        selected = "Sample"),
+    
     selectInput(inputId = "method",
         label = "Method to use to reconstruct the network:",
         choices = c("GeneNet"),

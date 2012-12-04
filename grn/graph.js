@@ -19,30 +19,7 @@
       return $(scope).find('.shiny-network-output');
     },
     renderValue: function(el, data) {
-      function get2DArray(size) {
-          size = size > 0 ? size : 0;
-          var arr = [];
       
-          while(size--) {
-              arr.push([]);
-          }
-      
-          return arr;
-      }
-
-      //convert data to 2d array
-      d2 = get2DArray(data.names.length);
-
-      var curRow = 0;
-      for (var i = 0; i < data.data.length; i++){
-        d2[curRow].push(data.data[i]);
-        if (d2[curRow].length == data.names.length){
-          curRow++;
-        }
-      }
-
-      data.data = d2;
-
       //format nodes object
       var nodes = new Array();
       for (var i = 0; i < data.names.length; i++){
@@ -50,10 +27,10 @@
       }
 
 
-      var width = 700;
-      var height = 500;
+      var width = 800;
+      var height = 600;
     
-      var lin = [{"source":1, "target":2}]            
+      var lin = data.links
       var force = d3.layout.force()
         .nodes(nodes)
         .links(lin)
