@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
   
   output$debug <- reactivePrint(function(){})
   
-  output$main_net <- reactiveAdjacencyMatrix(function() {
+  output$mainnet <- reactiveAdjacencyMatrix(function() {
   
     if(is.null(input$file)){
       plot.new()
