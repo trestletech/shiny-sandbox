@@ -40,8 +40,10 @@
         .start();
       
       //remove the old graph
-      var svg = d3.select(el).select("svg");
+      var svg = d3.select(el).select("svg");      
       svg.remove();
+      
+      $(el).html("");
       
       //append a new one
       svg = d3.select(el).append("svg");
