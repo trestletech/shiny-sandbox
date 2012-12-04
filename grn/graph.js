@@ -18,7 +18,7 @@
 
       //convert data to 2d array
       d2 = get2DArray(data.names.length);
-      
+
       var curRow = 0;
       for (var i = 0; i < data.data.length; i++){
         d2[curRow].push(data.data[i]);
@@ -29,19 +29,25 @@
 
       data.data = d2;
 
-      var lin = new Array();
-      lin.source = data.names[1];
-      lin.target = data.names[2];
+      //format nodes object
+      var nodes = new Array();
+      for (var i = 0; i < data.names.length; i++){
+        nodes.push({"name": data.names[i]})
+      }
+
 
       var width = 500;
       var height = 300;
-
+    
+      var lin = [{"source":nodes[1], "target":nodes[2]}]
+            
       var force = d3.layout.force()
-        .nodes(data.names)
+        .nodes(nodes)
         .links(lin)
+        .charge(-120)
+        .linkDistance(30)        
         .size([width, height])
         .start();
-
       
       var svg = d3.select(el).append("svg");
       
@@ -55,13 +61,25 @@
           .style("stroke-width", function(d) { return Math.sqrt(d.value); });
     
       var node = svg.selectAll("circle.node")
-          .data(data.names)
+          .data(nodes)
         .enter().append("circle")
           .attr("class", "node")
           .attr("r", 5)
           //.style("fill", function(d) { return color(d.group); })
           .call(force.drag);
-
+      node.append("title")
+        .text(function(d) { return d.name; });
+        
+        
+      force.on("tick", function() {
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+    
+        node.attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      });
       
     }
   });
