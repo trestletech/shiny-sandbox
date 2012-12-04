@@ -1,5 +1,3 @@
-
-library(igraph)
 library(ENA)
 
 reactiveAdjacencyMatrix <- function(func){
