@@ -1,3 +1,17 @@
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+</style>
+
 <script src="http://d3js.org/d3.v2.js"></script>
 <script type="text/javascript">var networkOutputBinding = new Shiny.OutputBinding();
   $.extend(networkOutputBinding, {
@@ -36,11 +50,10 @@
       }
 
 
-      var width = 500;
-      var height = 300;
+      var width = 700;
+      var height = 500;
     
-      var lin = [{"source":nodes[1], "target":nodes[2]}]
-            
+      var lin = [{"source":1, "target":2}]            
       var force = d3.layout.force()
         .nodes(nodes)
         .links(lin)
@@ -49,7 +62,12 @@
         .size([width, height])
         .start();
       
-      var svg = d3.select(el).append("svg");
+      //remove the old graph
+      var svg = d3.select(el).select("svg");
+      svg.remove();
+      
+      //append a new one
+      svg = d3.select(el).append("svg");
       
       svg.attr("width", width)
         .attr("height", height);

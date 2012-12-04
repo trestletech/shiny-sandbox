@@ -1,6 +1,6 @@
 reactiveNetwork <- function (outputId) 
 {
-  HTML(paste("<div id=\"", outputId, "\" class=\"shiny-network-output\"></div>", sep=""))
+  HTML(paste("<div id=\"", outputId, "\" class=\"shiny-network-output\"><svg /></div>", sep=""))
 }
 
 
