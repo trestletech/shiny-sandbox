@@ -12,6 +12,11 @@ shinyUI(pageWithSidebar(
     checkboxInput(inputId="sampleData", label="Use Sample Data", value=TRUE),
     
     conditionalPanel(
+      condition = "input.sampleData == true",
+      helpText(HTML("<div style=\"text-indent: 25px\">Download the sample dataset <a href=\"sampleExp.csv\">here</a></div>"))
+    ),
+    
+    conditionalPanel(
       condition = "input.sampleData == false",      
       fileInput(inputId = "file", label="Network to reconstruct:"),      
       selectInput(inputId = "orientation",
@@ -27,13 +32,17 @@ shinyUI(pageWithSidebar(
   
     sliderInput(inputId = "con_weight",
                 label = "Connection threshold:",
-                min = 0.0, max = 1, value = .25, step = 0.05)
+                min = 0.0, max = 1, value = .15, step = 0.05),
+    
+helpText("Use the slider to set the number of connections which 
+             will be displayed in the graph. Higher, more stringent 
+             thresholds will include fewer connections, while lower thresholds 
+             will display more connections")
   ),
   
   mainPanel(    
     includeHTML("graph.js"),
-    reactiveNetwork(outputId = "mainnet"),
-    verbatimTextOutput("debug")
+    reactiveNetwork(outputId = "mainnet")    
   )
   
   

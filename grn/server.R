@@ -55,10 +55,14 @@ shinyServer(function(input, output) {
     data
   })
   
-  output$debug <- reactivePrint(function(){})
-  
   output$mainnet <- reactiveAdjacencyMatrix(function() {
   
+    
+    
+    if (is.null(input$file) && input$sampleData == FALSE){
+      return()
+    }
+    
     data <- data()
     
     if (input$method == "GeneNet"){      
