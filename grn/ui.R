@@ -9,19 +9,21 @@ shinyUI(pageWithSidebar(
   headerPanel("Reconstruct Gene Networks"),
   
   sidebarPanel(
-    selectInput(inputId = "dataSource",
-                label = "Source of the gene expression data:",
-                choices = c("Local", "Remote"),
-                selected = "Remote"),
+    #selectInput(inputId = "dataSource",
+    #            label = "Source of the gene expression data:",
+    #            choices = c("Local", "Remote"),
+    #            selected = "Remote"),
+    
+    checkboxInput(inputId= "dataSource", label="Use a file stored on my machine.", value=FALSE),
     
     conditionalPanel(
-      condition = "input.dataSource == Remote",
+      condition = "input.dataSource == false",
       textInput(inputId="url", label="File URL:", value="./sampleExp.csv"),
       helpText(HTML("<div style=\"text-indent: 25px\">Download the sample dataset <a href=\"sampleExp.csv\">here</a></div>"))
     ),
     
     conditionalPanel(
-      condition = "input.dataSource == Local",      
+      condition = "input.dataSource == true",      
       fileInput(inputId = "file", label="Network to reconstruct:")      
     ),
       

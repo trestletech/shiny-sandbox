@@ -37,18 +37,21 @@ reactiveAdjacencyMatrix <- function(func){
 shinyServer(function(input, output) {
 
   data <- reactive(function(){
-    if (input$dataSource == "Local"){      
+        
+    if (input$dataSource == FALSE){      
       path <- input$url
       
       #translate relative paths to server-friendly paths
       if (substr(input$url, 0, 2) == "./"){
-        input$url <- paste("./www/", substr(input$url, 2, length(input$url)), sep="")
+        path <- paste("./www/", substring(input$url, 3), sep="")
       }      
-    } else{
+    } else{      
       df <- input$file
       path <- df$datapath  
     }
-        
+    
+    
+    
     data <- read.csv(path, row.names=1)
     
     #ensure that each row is a gene.
@@ -59,12 +62,6 @@ shinyServer(function(input, output) {
   })
   
   output$mainnet <- reactiveAdjacencyMatrix(function() {
-  
-    
-    
-    if (is.null(input$file) && input$sampleData == FALSE){
-      return()
-    }
     
     data <- data()
     
