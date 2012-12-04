@@ -24,8 +24,6 @@ reactiveAdjacencyMatrix <- function(func){
     #now consider only the upper half of the matrix
     val[lower.tri(val)] <- 0
     
-    print(val)
-    
     conns <- cbind(source=row(val)[val>0]-1, target=col(val)[val>0]-1, weight=val[val>0])
     
     if (nrow(conns) == 0){
@@ -41,6 +39,11 @@ reactiveAdjacencyMatrix <- function(func){
 shinyServer(function(input, output) {
 
   data <- reactive(function(){
+    if (input$sampleData == TRUE){
+      data <- t(read.csv("sampleExp.csv", header=TRUE, row.names=1))
+      return(data)
+    }
+    
     df <- input$file
     path <- df$datapath     
     data <- read.csv(path, row.names=1)
@@ -56,10 +59,6 @@ shinyServer(function(input, output) {
   
   output$mainnet <- reactiveAdjacencyMatrix(function() {
   
-    if(is.null(input$file)){      
-      return()  
-    }
-    
     data <- data()
     
     if (input$method == "GeneNet"){      

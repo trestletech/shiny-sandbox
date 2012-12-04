@@ -9,13 +9,17 @@ shinyUI(pageWithSidebar(
   headerPanel("Reconstruct Gene Networks"),
   
   sidebarPanel(
-    fileInput(inputId = "file", label="Network to reconstruct:"),
+    checkboxInput(inputId="sampleData", label="Use Sample Data", value=TRUE),
     
-    selectInput(inputId = "orientation",
-        label="One row represents a single:",
-        choices = c("Sample", "Gene"),
-        selected = "Sample"),
-    
+    conditionalPanel(
+      condition = "input.sampleData == false",      
+      fileInput(inputId = "file", label="Network to reconstruct:"),      
+      selectInput(inputId = "orientation",
+          label="One row represents a single:",
+          choices = c("Sample", "Gene"),
+          selected = "Sample")
+    ),
+      
     selectInput(inputId = "method",
         label = "Method to use to reconstruct the network:",
         choices = c("GeneNet"),
