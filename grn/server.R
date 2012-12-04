@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
 
   data <- reactive(function(){
     if (input$sampleData == TRUE){
-      data <- t(read.csv("sampleExp.csv", header=TRUE, row.names=1))
+      data <- t(read.csv("www/sampleExp.csv", header=TRUE, row.names=1))
       return(data)
     }
     
