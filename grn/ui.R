@@ -54,8 +54,12 @@ shinyUI(pageWithSidebar(
 helpText("Use the slider to set the number of connections which 
              will be displayed in the graph. Higher, more stringent 
              thresholds will include fewer connections, while lower thresholds 
-             will display more connections")
+             will display more connections"),
+    
+    HTML("<hr />"),
+    helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/grn\">Github</a>"))
   ),
+  
   
   mainPanel(    
     includeHTML("graph.js"),
