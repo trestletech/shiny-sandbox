@@ -18,7 +18,7 @@ extractWebGL <- function(wwwDir="www", imgDir="img/"){
   lines <- gsub("snapshot.png", paste(imgDir, id, ".png", sep=""), lines)
   
   #create the img dir if it doesn't yet exist.
-  dir.create(paste(wwwDir, "/", imgDir, sep=""))
+  dir.create(paste(wwwDir, "/", imgDir, sep=""), showWarnings=FALSE)
   
   #copy the snapshot image to a public WWW dir
   file.copy(paste(tempDir, "snapshot.png", sep=""), paste(wwwDir, "/", imgDir, id, ".png", sep=""))
