@@ -17,7 +17,7 @@ shinyUI(pageWithSidebar(
         
     checkboxInput(inputId= "PCA", label="Display principal components.", value=FALSE),
     conditionalPanel("input.PCA == true", 
-      selectInput(inputId = "pcaCount", label="Principal components to display:", choices=1:3)
+      selectInput(inputId = "pcaCount", label="Principal components to display:", choices=1:3)      
     ),
                 
     HTML("<hr />"),
@@ -26,8 +26,11 @@ shinyUI(pageWithSidebar(
   
   
   mainPanel(        
-    reactiveWebGL(outputId = "webGL"),
     tags$head(tags$script(src="rgl.js", type="text/javascript")),
-    tags$head(tags$script(src="CanvasMatrix.js", type="text/javascript"))
+    tags$head(tags$script(src="CanvasMatrix.js", type="text/javascript")),
+    reactiveWebGL(outputId = "webGL"),    
+    conditionalPanel("input.PCA == true", 
+      textOutput(outputId="r2")
+    )
   )
 ))

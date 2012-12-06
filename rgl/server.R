@@ -50,14 +50,31 @@ calcPCA <- function(matrix, pca=1){
 }
 
 shinyServer(function(input, output) {
-  output$webGL <- reactiveWebGL(function() {
-    #load the selected palett
+  palette <- reactive(function(){
+    #load the selected palette
     pal <- brewer.pal(9, input$palette)
     
     #divide into RGB channels
     rgb <- hex2RGB(pal)@coords * 255    
     
-    plot3d(rgb, col=pal, type="l")
+    rgb
+  })
+  
+  output$r2 <- reactiveText(function() {
+    rgb <- palette()
+    #plot and compute the PCs, if desired
+    if (input$PCA){
+      r2 <- calcPCA(rgb, input$pcaCount)
+    } else{
+      r2 <- 0
+    }
+    paste("R2 value: ", format(r2, digits=4))
+  })
+  
+  output$webGL <- reactiveWebGL(function() {
+    rgb <- palette()
+    
+    plot3d(rgb, col=hex(RGB(rgb/255)), type="l")
     
     #plot and compute the PCs, if desired
     if (input$PCA){

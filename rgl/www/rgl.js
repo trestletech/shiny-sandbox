@@ -8,8 +8,7 @@ $.extend(webglOutputBinding, {
     $(el).html(data);
     
     setTimeout(function() { webGLStart(); }, 100);
-    //webGLStart();
-    
+        
   }
 });
 Shiny.outputBindings.register(webglOutputBinding, 'trestletech.webglbinding');

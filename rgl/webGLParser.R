@@ -7,7 +7,7 @@ extractWebGL <- function(wwwDir="www", imgDir="img/"){
   id <- paste(sample(c(letters, LETTERS), 10), collapse="")  
   tempDir <- paste(tempdir(), "/", id, "/", sep="")
   
-  writeWebGL(dir=tempDir, template="template.html")
+  writeWebGL(dir=tempDir, template="template.html", height=500, width=400)
 
   #read in the file
   lines <- readLines(paste(tempDir, "/index.html", sep=""))
