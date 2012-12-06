@@ -74,7 +74,7 @@ shinyServer(function(input, output) {
   output$webGL <- reactiveWebGL(function() {
     rgb <- palette()
     
-    plot3d(rgb, col=hex(RGB(rgb/255)), type="l")
+    plot3d(rgb, col=hex(RGB(rgb/255)), type="l", xlab="Red", ylab="Green", zlab="Blue")
     
     #plot and compute the PCs, if desired
     if (input$PCA){
