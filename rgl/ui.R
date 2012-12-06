@@ -4,9 +4,8 @@ reactiveWebGL <- function (outputId)
 }
 
 getColorPalettes <- function(){
-  #reach into RColor Brewer's var's to get the list of all the color palettes they offer
-  c(RColorBrewer:::divlist,                  
-    RColorBrewer:::quallist,                  
+  #reach into RColor Brewer's var's to get the list of all the non-qualitative color palettes they offer
+  c(RColorBrewer:::divlist,
     RColorBrewer:::seqlist)
 }
 
@@ -16,8 +15,10 @@ shinyUI(pageWithSidebar(
   sidebarPanel(
     selectInput(inputId = "palette", label="Color Palette", choices=getColorPalettes()),
         
-    checkboxInput(inputId= "firstPCA", label="Display the first principal component.", value=FALSE),
-    checkboxInput(inputId= "firstPCA", label="Display the second principal component.", value=FALSE),
+    checkboxInput(inputId= "PCA", label="Display principal components.", value=FALSE),
+    conditionalPanel("input.PCA == true", 
+      selectInput(inputId = "pcaCount", label="Principal components to display:", choices=1:3)
+    ),
                 
     HTML("<hr />"),
     helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/rgl\">Github</a>"))
