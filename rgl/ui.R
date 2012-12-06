@@ -3,15 +3,24 @@ reactiveWebGL <- function (outputId)
   HTML(paste("<div id=\"", outputId, "\" class=\"shiny-webgl-output\"></div>", sep=""))
 }
 
+getColorPalettes <- function(){
+  #reach into RColor Brewer's var's to get the list of all the color palettes they offer
+  c(RColorBrewer:::divlist,                  
+    RColorBrewer:::quallist,                  
+    RColorBrewer:::seqlist)
+}
+
 shinyUI(pageWithSidebar(    
   headerPanel("WebGL Demo"),
   
   sidebarPanel(
-    checkboxInput(inputId= "dataSource", label="Use a file stored on my local machine.", value=FALSE),
-    HTML("<hr />"),
+    selectInput(inputId = "palette", label="Color Palette", choices=getColorPalettes()),
         
+    checkboxInput(inputId= "firstPCA", label="Display the first principal component.", value=FALSE),
+    checkboxInput(inputId= "firstPCA", label="Display the second principal component.", value=FALSE),
+                
     HTML("<hr />"),
-    helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/grn\">Github</a>"))
+    helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/rgl\">Github</a>"))
   ),
   
   
