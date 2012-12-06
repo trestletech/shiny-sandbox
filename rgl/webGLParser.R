@@ -2,19 +2,18 @@
 #' a call to writeWebGL().
 #' 
 #' The resultant HTML document will work assuming that canvasMatrix.js is loaded
-#' and that webGLStart() is called.
 extractWebGL <- function(wwwDir="www", imgDir="img/"){
   #generate a random 10 character sequence to represent this file
   id <- paste(sample(c(letters, LETTERS), 10), collapse="")  
   tempDir <- paste(tempdir(), "/", id, "/", sep="")
   
-  writeWebGL(dir=tempDir)
+  writeWebGL(dir=tempDir, template="template.html")
 
-  #read in the file and extract only the canvas elements.
+  #read in the file
   lines <- readLines(paste(tempDir, "/index.html", sep=""))
-  lines <- lines[-(1:7)]
-  lines <- lines[-((length(lines)-8):length(lines))]
-  
+  #remove canvasMatrix load -- we'll load it elsewhere
+  lines <- lines[-1]
+      
   #sub out the snapshot reference for a file with a unique ID
   lines <- gsub("snapshot.png", paste(imgDir, id, ".png", sep=""), lines)
   
