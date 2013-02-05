@@ -38,19 +38,13 @@ shinyServer(function(input, output) {
 
   data <- reactive(function(){
         
-    if (input$dataSource == FALSE){      
-      path <- input$url
+    path <- input$url
       
-      #translate relative paths to server-friendly paths
-      if (substr(input$url, 0, 2) == "./"){
-        path <- paste("./www/", substring(input$url, 3), sep="")
-      }      
-    } else{      
-      df <- input$file
-      path <- df$datapath  
-    }
-    
-    
+    #translate relative paths to server-friendly paths
+    if (substr(input$url, 0, 2) == "./"){
+      path <- paste("./www/", substring(input$url, 3), sep="")
+    }      
+       
     
     data <- read.csv(path, row.names=1)
     
