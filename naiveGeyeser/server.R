@@ -1,8 +1,11 @@
 log <- function(text, file="log.txt"){
-  log <- file(file, "at")
-  writeLines(text, con=log)
+  tryCatch({
+    log <- file(file, "at")
+    writeLines(text, con=log)
+    close(log)
+  }, error= function(e){}
+  )
   print(text)
-  close(log)
 }
 
 shinyServer(function(input, output) {
