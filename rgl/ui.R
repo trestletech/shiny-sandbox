@@ -3,23 +3,6 @@ reactiveWebGL <- function (outputId)
   HTML(paste("<div id=\"", outputId, "\" class=\"shiny-webgl-output\"></div>", sep=""))
 }
 
-googleAnalytics <- function(account="UA-36850640-1"){
-  HTML(paste("<script type=\"text/javascript\">
-    
-    var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '",account,"']);
-  _gaq.push(['_setDomainName', 'rstudio.com']);
-  _gaq.push(['_trackPageview']);
-  
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-  
-  </script>", sep=""))
-}
-
 #' Get the color palettes from RColorBrewer to display as options for the user.
 getColorPalettes <- function(){
   #reach into RColor Brewer's var's to get the list of all the non-qualitative color palettes they offer
@@ -52,7 +35,6 @@ shinyUI(pageWithSidebar(
     reactiveWebGL(outputId = "webGL"),    
     conditionalPanel("input.PCA == true", 
       textOutput(outputId="r2")
-    ),
-    googleAnalytics()
+    )
   )
 ))

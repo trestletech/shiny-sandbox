@@ -4,6 +4,23 @@ reactiveNetwork <- function (outputId)
 }
 
 
+googleAnalytics <- function(account="UA-36850640-1"){
+  HTML(paste("<script type=\"text/javascript\">
+
+    var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '",account,"']);
+  _gaq.push(['_setDomainName', 'rstudio.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  </script>", sep=""))
+}
+
 
 shinyUI(pageWithSidebar(    
   headerPanel("Reconstruct Gene Networks"),
@@ -13,28 +30,9 @@ shinyUI(pageWithSidebar(
     #            label = "Source of the gene expression data:",
     #            choices = c("Local", "Remote"),
     #            selected = "Remote"),
-    
-    checkboxInput(inputId= "dataSource", label="Use a file stored on my local machine.", value=FALSE),
-    
-    conditionalPanel(
-      condition = "input.dataSource == false",
-      textInput(inputId="url", label="File URL:", value="./sampleExp.csv"),
-      helpText(HTML("<div style=\"text-indent: 25px\">Download the sample dataset <a href=\"sampleExp.csv\">here</a></div>"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.dataSource == true",            
-      fileInput(inputId = "file", label="Network to reconstruct:"),
-      helpText(HTML("<div style=\"color: red; font-weight: bold\">Warning:</div> Local file uploads in 
-                    Shiny are <strong>very</strong> experimental. I have had success using this
-                    feature from the latest version of Firefox but, at the time of writing, it
-                    does not seem to be working from Chrome or IE.
-                    <p>If you have trouble using this feature but want to analyze your own 
-                    dataset, you can upload the file to a public URL using a tool like 
-                    <a href=\"http://dropbox.com\">Dropbox</a> or one of the many free upload
-                    sites."))
-    ),
-      
+    textInput(inputId="url", label="File URL:", value="./sampleExp.csv"),
+    helpText(HTML("<div style=\"text-indent: 25px\">Unfortunately, Shiny isn't playing nicely with file uploads at the time of writing, so I've disabled the custom file uploads temporarily. However, you can post your expression file online using any one of the free file hosting sites now available and provide the URL here to process it in this app! <p>You can also download the sample dataset <a href=\"sampleExp.csv\">here</a>.</div>")),
+          
     HTML("<hr />"),
     
     selectInput(inputId = "orientation",
@@ -63,7 +61,8 @@ helpText("Use the slider to set the number of connections which
   
   mainPanel(    
     includeHTML("graph.js"),
-    reactiveNetwork(outputId = "mainnet")    
+    reactiveNetwork(outputId = "mainnet") ,
+    googleAnalytics()
   )
   
   
