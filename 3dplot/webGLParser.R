@@ -2,12 +2,12 @@
 #' a call to writeWebGL().
 #' 
 #' The resultant HTML document will work assuming that canvasMatrix.js is loaded
-extractWebGL <- function(wwwDir="www", imgDir="img/"){
+extractWebGL <- function(size, wwwDir="www", imgDir="img/"){
   #generate a random 10 character sequence to represent this file
   id <- paste(sample(c(letters, LETTERS), 10), collapse="")  
   tempDir <- paste(tempdir(), "/", id, "/", sep="")
   
-  writeWebGL(dir=tempDir, template="template.html", height=500, width=400)
+  writeWebGL(dir=tempDir, template="template.html", height=size, width=size)
 
   #read in the file
   lines <- readLines(paste(tempDir, "/index.html", sep=""))

@@ -7,13 +7,19 @@ shinyUI(pageWithSidebar(
   headerPanel("Plot 3D Points Online with WebGL"),
   
   sidebarPanel(
-    tags$textarea(id="points", rows=10, cols=30, "1,1,1,\"#000000\"\n2,2,2,\"#000000\"\n3,3,3,\"#000000\"\n"),
+    helpText("Paste your CSV file here in the format of X,Y,Z,color:"),
+    tags$textarea(id="points", rows=10, cols=30, 
+"1,1,1,\"black\"
+2,2,2,\"black\"
+3,3,3,\"black\""),
     
     textInput("xlab", label="X-Axis Label:"),
     textInput("ylab", label="Y-Axis Label:"),
     textInput("zlab", label="Z-Axis Label:"),
     
     selectInput("type", "Plot Type", c("Scatterplot", "Line"), selected="Scatterplot"),
+    
+    numericInput("size", "Size of plot:", 500, min=0),
     
     HTML("<hr />"),
     helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/3dplot\">Github</a>"))

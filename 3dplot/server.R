@@ -2,16 +2,17 @@ library(rgl)
 library(RColorBrewer)
 library(colorspace)
 
-reactiveWebGL <- function(func){
-  reactive(function(){
-    func()
-    
-    source("webGLParser.R")
-    extractWebGL()    
-  })
-}
+source("webGLParser.R")
 
 shinyServer(function(input, output) {
+  reactiveWebGL <- function(func){
+    reactive(function(){
+      func()
+      
+      extractWebGL(input$size)    
+    })
+  }
+  
   points <- reactive(function(){
     points <- read.csv(txt <- textConnection(input$points), header=FALSE)
     close(txt)
