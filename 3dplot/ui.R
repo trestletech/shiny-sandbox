@@ -3,19 +3,26 @@ reactiveWebGL <- function (outputId)
   HTML(paste("<div id=\"", outputId, "\" class=\"shiny-webgl-output\"></div>", sep=""))
 }
 
+
+c1 <- data.frame(x=rnorm(20,5,2), y=rnorm(20, 3, 1), z=rnorm(20, 4, 1.5), col="1")
+c2 <- data.frame(x=rnorm(50,12,1), y=rnorm(50, 8, 3), z=rnorm(50, 0, 2.5), col="2")
+c3 <- data.frame(x=rnorm(25,7,1), y=rnorm(25, 5, 2), z=rnorm(25, 0, 2), col="3")
+
+clusters <- rbind(c1, c2, c3)
+clusters[,1:3] <- round(clusters[,1:3], 1)
+
+clusterStr <- paste(capture.output(write.table(clusters, sep=",", col.names=FALSE, row.names=FALSE)), collapse="\n")
+
 shinyUI(pageWithSidebar(    
   headerPanel("Plot 3D Points Online with WebGL"),
   
   sidebarPanel(
     helpText("Paste your CSV file here in the format of X,Y,Z,color:"),
-    tags$textarea(id="points", rows=10, cols=30, 
-"1,1,1,\"black\"
-2,2,2,\"black\"
-3,3,3,\"black\""),
+    tags$textarea(id="points", rows=10, cols=30, clusterStr),
     
-    textInput("xlab", label="X-Axis Label:"),
-    textInput("ylab", label="Y-Axis Label:"),
-    textInput("zlab", label="Z-Axis Label:"),
+    textInput("xlab", label="X-Axis Label:", "X"),
+    textInput("ylab", label="Y-Axis Label:", "Y"),
+    textInput("zlab", label="Z-Axis Label:", "Z"),
     
     selectInput("type", "Plot Type", c("Scatterplot", "Line"), selected="Scatterplot"),
     
