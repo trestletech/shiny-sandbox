@@ -19,7 +19,7 @@ shinyUI(pageWithSidebar(
     
     selectInput("type", "Plot Type", c("Scatterplot", "Line"), selected="Scatterplot"),
     
-    numericInput("size", "Size of plot:", 500, min=0),
+    sliderInput("size", "Size of plot:", 500, min=100, max=1200, step=25),    
     
     HTML("<hr />"),
     helpText(HTML("All source available on <a href = \"https://github.com/trestletech/shiny-sandbox/tree/master/3dplot\">Github</a>"))
